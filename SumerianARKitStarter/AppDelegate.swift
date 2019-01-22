@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true
     }
 
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if(!accepted) {
                 let alert = UIAlertController(title: "Camera Disabled", message: "AR scenes require access to the camera.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Enable Camera", style: .default, handler: { (action: UIAlertAction!) in
-                    UIApplication.shared.open(URL(string: "app-settings:")!, options: [:], completionHandler: nil);
+                    UIApplication.shared.open(URL(string: "app-settings:")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil);
                 }))
                 self?.window?.rootViewController?.present(alert, animated: true)
             }
@@ -46,3 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
